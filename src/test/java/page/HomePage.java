@@ -20,6 +20,9 @@ public class HomePage  extends AbstractPage {
 
     private final Logger logger = LogManager.getRootLogger();
 
+    @FindBy(xpath = "//*[@id=\"inform\"]/button")
+    private WebElement buttonCloseSaleWindow;
+
     @FindBy(xpath = "//button[@class='close js-close-cookie']")
     private WebElement buttonToCloseCookie;
 
@@ -36,6 +39,8 @@ public class HomePage  extends AbstractPage {
     private WebElement noSearchTextBox;
 
     private By pathToNoSearchTextBox = By.xpath("//div[@class='search-page-results']");
+
+    private By pathToCloseSaleWindow = By.xpath("//*[@id='inform']/button");
 
     private By pathToSearchResult = By.xpath("//a[@class='acc-item-name']");
 
@@ -55,6 +60,8 @@ public class HomePage  extends AbstractPage {
         Waits.getWebElementUntilClickableWait(driver, pathToSearchBox);
         inputBoxOfSearch.sendKeys(textToSearch);
         inputBoxOfSearch.sendKeys(Keys.ENTER);
+        Waits.getWebElementUntilClickableWait(driver, pathToCloseSaleWindow);
+        buttonCloseSaleWindow.click();
         return this;
     }
 
@@ -74,6 +81,8 @@ public class HomePage  extends AbstractPage {
     @Override
     public HomePage openPage() {
         driver.get(HOME_PAGE_URL);
+        Waits.getWebElementUntilClickableWait(driver, pathToCloseSaleWindow);
+        buttonCloseSaleWindow.click();
         Waits.getWebElementUntilWait(driver, pathToCloseCookieButton);
         buttonToCloseCookie.click();
         logger.info("Cookie window in item page closed");

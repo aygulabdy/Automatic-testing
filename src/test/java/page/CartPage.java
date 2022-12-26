@@ -21,6 +21,9 @@ public class CartPage extends AbstractPage{
     @FindBy(xpath = "//td/div/div/a[@class='acc-item-name']")//have similar non touch elements
     private List<WebElement> listOfItemInCart;
 
+    @FindBy(xpath = "//*[@id=\"inform\"]/button")
+    private WebElement buttonCloseSaleWindow;
+
     @FindBy(xpath = "//div[@class='content']")
     private WebElement emptyCartMessage;
 
@@ -31,6 +34,8 @@ public class CartPage extends AbstractPage{
     private WebElement buttonToDelete;
 
     private final By pathToItemNamesInCart = By.xpath("//td/div/div/a[@class='acc-item-name']"); //have similar non touch elements
+
+    private By pathToCloseSaleWindow = By.xpath("//*[@id='inform']/button");
 
     private final By pathToInfoOfQuantity = By.xpath("//div[@class='quantity-block']/div/input[@class='form-control']");
 
@@ -82,6 +87,8 @@ public class CartPage extends AbstractPage{
     @Override
     public CartPage openPage() {
         driver.get(CART_PAGE_URL);
+        Waits.getWebElementUntilClickableWait(driver, pathToCloseSaleWindow);
+        buttonCloseSaleWindow.click();
         logger.info("Cookie window in item page closed");
         return this;
     }

@@ -16,6 +16,9 @@ public class ItemPage extends AbstractPage{
     @FindBy(xpath = "//button[@class='close js-close-cookie']")
     private WebElement buttonToCloseCookie;
 
+    @FindBy(xpath = "//*[@id=\"inform\"]/button")
+    private WebElement buttonCloseSaleWindow;
+
     @FindBy(xpath = "//button[@class='empty-btn new-cart']")
     private WebElement buttonAddToCart;
 
@@ -23,6 +26,8 @@ public class ItemPage extends AbstractPage{
     private WebElement buttonIncreaseQuantityOfItem;
 
     private By pathToCloseCookieButton = By.xpath("//button[@class='close js-close-cookie']");
+
+    private By pathToCloseSaleWindow = By.xpath("//*[@id='inform']/button");
 
     private By pathToAddToCart = By.xpath("//button[@class='empty-btn new-cart']");
 
@@ -51,6 +56,8 @@ public class ItemPage extends AbstractPage{
     public ItemPage openPage() {
         Item testItem = ItemCreator.withCredentialsFromProperty();
         driver.get(testItem.getItemURL());
+        Waits.getWebElementUntilClickableWait(driver, pathToCloseSaleWindow);
+        buttonCloseSaleWindow.click();
         Waits.getWebElementUntilWait(driver, pathToCloseCookieButton);
         buttonToCloseCookie.click();
         logger.info("Cookie window in item page closed");

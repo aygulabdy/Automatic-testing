@@ -14,10 +14,15 @@ public class ItemsListPage extends AbstractPage{
 
     private final String BASE_URL = "https://shop.huawei.by/smart/";
 
+    @FindBy(xpath = "//*[@id=\"inform\"]/button")
+    private WebElement buttonCloseSaleWindow;
+
     @FindBy(xpath = "//div[@class='product-item__price']")
     private List<WebElement> priceInfoText;
 
     private final By pathToPriceInfoText = By.xpath("//div[@class='product-item__price']");
+
+    private By pathToCloseSaleWindow = By.xpath("//*[@id='inform']/button");
 
     public ItemsListPage(WebDriver driver) {
         super(driver);
@@ -35,6 +40,8 @@ public class ItemsListPage extends AbstractPage{
     @Override
     public ItemsListPage openPage() {
         driver.get(BASE_URL);
+        Waits.getWebElementUntilClickableWait(driver, pathToCloseSaleWindow);
+        buttonCloseSaleWindow.click();
         return this;
     }
 
